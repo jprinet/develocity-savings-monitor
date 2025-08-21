@@ -44,7 +44,7 @@ def process_csv(csv_file, process_timestamp_ms):
         current_timestamp_ms = int(process_timestamp_ms) if process_timestamp_ms else int(time.time() * 1000)
 
         for row in reader:
-            project = row[0].replace(" ", "-").replace("/", "-").replace("\\", "-")
+            project = row[0].replace(" ", "-").replace("/", "-").replace("\\", "-").replace(",", "-")
             build_count_raw = row[1]
             build_duration_seconds_raw = row[2]
             build_cache_savings_seconds_raw = row[4]
