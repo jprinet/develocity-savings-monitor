@@ -24,6 +24,11 @@ docker exec runner python3 /home/runner/add.py <PATH_TO_CSV>
 docker exec runner python3 /home/runner/reset.py
 ```
 
+- Turn off the system:
+```bash
+docker compose down
+```
+
 # Rendering
 
 open the Grafana dashboard on http://localhost:3000/

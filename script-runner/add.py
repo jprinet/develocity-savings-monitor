@@ -76,6 +76,6 @@ def process_csv(csv_file, process_timestamp_ms):
 
 if __name__ == "__main__":
     if len(sys.argv) < 3:
-        print('USAGE: inject-data.py <PATH_TO_CSV> [TIMESTAMP_IN_MS]')
+        print('USAGE: add.py <PATH_TO_CSV> [TIMESTAMP_IN_MS]')
         sys.exit(1)
     process_csv(sys.argv[1], sys.argv[2] if len(sys.argv) > 2 else None)
