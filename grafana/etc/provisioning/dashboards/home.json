@@ -66,7 +66,7 @@
   "liveNow": false,
   "panels": [
     {
-      "collapsed": true,
+      "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -74,303 +74,302 @@
         "y": 0
       },
       "id": 12,
-      "panels": [
-        {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "${DS_INFLUXDB_V2_FLUX}"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              }
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 7,
-            "w": 4,
-            "x": 0,
-            "y": 17
-          },
-          "id": 14,
-          "options": {
-            "colorMode": "value",
-            "graphMode": "area",
-            "justifyMode": "auto",
-            "orientation": "auto",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "textMode": "auto"
-          },
-          "pluginVersion": "9.3.6",
-          "targets": [
-            {
-              "datasource": {
-                "type": "influxdb",
-                "uid": "${DS_INFLUXDB_V2_FLUX}"
-              },
-              "query": "import \"influxdata/influxdb/v1\"\nv1.tagValues(\n    bucket: \"build-scans\",\n    tag: \"project\",\n    predicate: (r) => true,\n    start: v.timeRangeStart, \n    stop: v.timeRangeStop\n)\n|> count()\n",
-              "refId": "A"
-            }
-          ],
-          "title": "Project Count (with cache savings)",
-          "type": "stat"
-        },
-        {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "${DS_INFLUXDB_V2_FLUX}"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "ms"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 7,
-            "w": 4,
-            "x": 4,
-            "y": 17
-          },
-          "id": 16,
-          "options": {
-            "colorMode": "value",
-            "graphMode": "area",
-            "justifyMode": "auto",
-            "orientation": "auto",
-            "reduceOptions": {
-              "calcs": [
-                "mean"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "textMode": "auto"
-          },
-          "pluginVersion": "9.3.6",
-          "targets": [
-            {
-              "datasource": {
-                "type": "influxdb",
-                "uid": "${DS_INFLUXDB_V2_FLUX}"
-              },
-              "query": "from(bucket: \"build-scans\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"build\")\n  |> filter(fn: (r) => r[\"_field\"] == \"cache_avoidance_savings_ms\")\n  |> group(columns: [\"_field\"])\n  |> sum()\n",
-              "refId": "A"
-            }
-          ],
-          "title": "Cache Savings",
-          "type": "stat"
-        },
-        {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "${DS_INFLUXDB_V2_FLUX}"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "ms"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 7,
-            "w": 4,
-            "x": 8,
-            "y": 17
-          },
-          "id": 17,
-          "options": {
-            "colorMode": "value",
-            "graphMode": "area",
-            "justifyMode": "auto",
-            "orientation": "auto",
-            "reduceOptions": {
-              "calcs": [
-                "mean"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "textMode": "auto"
-          },
-          "pluginVersion": "9.3.6",
-          "targets": [
-            {
-              "datasource": {
-                "type": "influxdb",
-                "uid": "${DS_INFLUXDB_V2_FLUX}"
-              },
-              "query": "from(bucket: \"build-scans\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"build\")\n  |> filter(fn: (r) => r[\"_field\"] == \"duration_ms\")\n  |> group(columns: [\"_field\"])\n  |> sum()\n",
-              "refId": "A"
-            }
-          ],
-          "title": "Build Time (with cache savings)",
-          "type": "stat"
-        },
-        {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "${DS_INFLUXDB_V2_FLUX}"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "short"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 7,
-            "w": 4,
-            "x": 12,
-            "y": 17
-          },
-          "id": 15,
-          "options": {
-            "colorMode": "value",
-            "graphMode": "area",
-            "justifyMode": "auto",
-            "orientation": "auto",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "textMode": "auto"
-          },
-          "pluginVersion": "9.3.6",
-          "targets": [
-            {
-              "datasource": {
-                "type": "influxdb",
-                "uid": "${DS_INFLUXDB_V2_FLUX}"
-              },
-              "query": "from(bucket: \"build-scans\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"build\")\n  |> count()  \n  |> group(columns: [\"_field\"])\n  |> filter(fn: (r) => r[\"_field\"] == \"build_id\")\n  |> sum()\n\n",
-              "refId": "A"
-            }
-          ],
-          "title": "Build Count (with cache savings)",
-          "type": "stat"
-        },
-        {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "${DS_INFLUXDB_V2_FLUX}"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              }
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 7,
-            "w": 4,
-            "x": 16,
-            "y": 17
-          },
-          "id": 18,
-          "options": {
-            "colorMode": "value",
-            "graphMode": "area",
-            "justifyMode": "auto",
-            "orientation": "auto",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "fields": "/.*/",
-              "values": false
-            },
-            "textMode": "auto"
-          },
-          "pluginVersion": "9.3.6",
-          "targets": [
-            {
-              "datasource": {
-                "type": "influxdb",
-                "uid": "${DS_INFLUXDB_V2_FLUX}"
-              },
-              "query": "from(bucket: \"build-scans\")\n    |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n    |> filter(fn: (r) => r[\"_measurement\"] == \"cache\")\n    |> filter(fn: (r) => r[\"_field\"] == \"serial_clock_savings_rate\")\n    |> filter(fn: (r) => r[\"_value\"] >= 10)\n    |> mean()\n    |> group(columns: [\"_field\"])\n    |> count()\n",
-              "refId": "A"
-            }
-          ],
-          "title": "Project Count with cache savings > 10%",
-          "type": "stat"
-        }
-      ],
+      "panels": [],
       "title": "Overall",
       "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB_V2_FLUX}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 4,
+        "x": 0,
+        "y": 1
+      },
+      "id": 14,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB_V2_FLUX}"
+          },
+          "query": "import \"influxdata/influxdb/v1\"\nv1.tagValues(\n    bucket: \"build-scans\",\n    tag: \"project\",\n    predicate: (r) => true,\n    start: v.timeRangeStart, \n    stop: v.timeRangeStop\n)\n|> count()\n",
+          "refId": "A"
+        }
+      ],
+      "title": "Project Count (with cache savings)",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB_V2_FLUX}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 4,
+        "x": 4,
+        "y": 1
+      },
+      "id": 16,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB_V2_FLUX}"
+          },
+          "query": "from(bucket: \"build-scans\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"build\")\n  |> filter(fn: (r) => r[\"_field\"] == \"cache_avoidance_savings_ms\")\n  |> group(columns: [\"_field\"])\n  |> sum()\n",
+          "refId": "A"
+        }
+      ],
+      "title": "Cache Savings",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB_V2_FLUX}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 4,
+        "x": 8,
+        "y": 1
+      },
+      "id": 17,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB_V2_FLUX}"
+          },
+          "query": "from(bucket: \"build-scans\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"build\")\n  |> filter(fn: (r) => r[\"_field\"] == \"duration_ms\")\n  |> group(columns: [\"_field\"])\n  |> sum()\n",
+          "refId": "A"
+        }
+      ],
+      "title": "Build Time (with cache savings)",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB_V2_FLUX}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 4,
+        "x": 12,
+        "y": 1
+      },
+      "id": 15,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB_V2_FLUX}"
+          },
+          "query": "from(bucket: \"build-scans\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"build\")\n  |> count()  \n  |> group(columns: [\"_field\"])\n  |> filter(fn: (r) => r[\"_field\"] == \"build_id\")\n  |> sum()\n\n",
+          "refId": "A"
+        }
+      ],
+      "title": "Build Count (with cache savings)",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB_V2_FLUX}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 4,
+        "x": 16,
+        "y": 1
+      },
+      "id": 18,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/.*/",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB_V2_FLUX}"
+          },
+          "query": "from(bucket: \"build-scans\")\n    |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n    |> filter(fn: (r) => r[\"_measurement\"] == \"cache\")\n    |> filter(fn: (r) => r[\"_field\"] == \"serial_clock_savings_rate\")\n    |> filter(fn: (r) => r[\"_value\"] >= 10)\n    |> mean()\n    |> group(columns: [\"_field\"])\n    |> count()\n",
+          "refId": "A"
+        }
+      ],
+      "title": "Project Count with cache savings > 10%",
+      "type": "stat"
     },
     {
       "collapsed": true,
@@ -378,7 +377,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 1
+        "y": 8
       },
       "id": 26,
       "panels": [
@@ -447,7 +446,7 @@
             "h": 8,
             "w": 8,
             "x": 0,
-            "y": 18
+            "y": 9
           },
           "id": 24,
           "options": {
@@ -558,7 +557,7 @@
             "h": 8,
             "w": 7,
             "x": 8,
-            "y": 18
+            "y": 9
           },
           "id": 7,
           "options": {
@@ -669,7 +668,7 @@
             "h": 8,
             "w": 8,
             "x": 15,
-            "y": 18
+            "y": 9
           },
           "id": 21,
           "options": {
@@ -725,7 +724,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 2
+        "y": 9
       },
       "id": 10,
       "panels": [
@@ -777,7 +776,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   },
                   {
                     "color": "red",
@@ -793,7 +793,7 @@
             "h": 8,
             "w": 8,
             "x": 0,
-            "y": 34
+            "y": 10
           },
           "id": 19,
           "options": {
@@ -869,7 +869,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   },
                   {
                     "color": "red",
@@ -885,7 +886,7 @@
             "h": 8,
             "w": 7,
             "x": 8,
-            "y": 34
+            "y": 10
           },
           "id": 20,
           "options": {
@@ -961,7 +962,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   },
                   {
                     "color": "red",
@@ -977,7 +979,7 @@
             "h": 8,
             "w": 8,
             "x": 15,
-            "y": 34
+            "y": 10
           },
           "id": 8,
           "options": {
@@ -1015,7 +1017,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 3
+        "y": 10
       },
       "id": 29,
       "panels": [],
@@ -1091,7 +1093,7 @@
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 4
+        "y": 11
       },
       "id": 27,
       "options": {
@@ -1172,7 +1174,7 @@
         "h": 8,
         "w": 8,
         "x": 8,
-        "y": 4
+        "y": 11
       },
       "id": 32,
       "options": {
@@ -1196,7 +1198,7 @@
             "type": "influxdb",
             "uid": "${DS_INFLUXDB_V2_FLUX}"
           },
-          "query": "from(bucket: \"build-scans\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) =>\n    r._measurement == \"build\" and\n    (r._field == \"total_savings_ms\" or r._field == \"is_ci\") and\n    (contains(value: r.project, set: ${project:json}) or contains(value: \"all\", set: ${project:json}))\n  )\n  |> pivot(\n    rowKey:[\"_time\"],\n    columnKey: [\"_field\"],\n    valueColumn: \"_value\"\n  )\n  |> map(fn: (r) => ({r with _value: float(v: r.total_savings_ms) / 1000.0 / 60.0 / 60.0 * 50.63 * (if r.is_ci then 0.2 else 0.8)}))\n  |> group()\n  |> aggregateWindow(every: 1w, fn: sum)\n  |> mean()\n",
+          "query": "from(bucket: \"build-scans\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) =>\n    r._measurement == \"build\" and\n    (r._field == \"total_savings_ms\" or r._field == \"is_ci\") and\n    (contains(value: r.project, set: ${project:json}) or contains(value: \"all\", set: ${project:json}))\n  )\n  |> pivot(\n    rowKey:[\"_time\"],\n    columnKey: [\"_field\"],\n    valueColumn: \"_value\"\n  )\n  |> map(fn: (r) => ({r with _value: float(v: r.total_savings_ms) / 1000.0 / 60.0 / 60.0 * 50.63 * (if r.is_ci then 0.2 else 0.8)}))\n  |> group()\n  |> aggregateWindow(every: 1d, fn: sum)\n  |> mean()\n  |> map(fn: (r) => ({r with _value: r._value * 7.0}))\n\n  ",
           "refId": "A"
         }
       ],
@@ -1209,7 +1211,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 12
+        "y": 19
       },
       "id": 34,
       "panels": [
@@ -1282,7 +1284,7 @@
             "h": 8,
             "w": 8,
             "x": 0,
-            "y": 13
+            "y": 12
           },
           "id": 30,
           "options": {
@@ -1391,13 +1393,38 @@
               },
               "unit": "currencyEUR"
             },
-            "overrides": []
+            "overrides": [
+              {
+                "__systemRef": "hideSeriesFrom",
+                "matcher": {
+                  "id": "byNames",
+                  "options": {
+                    "mode": "exclude",
+                    "names": [
+                      "CI"
+                    ],
+                    "prefix": "All except:",
+                    "readOnly": true
+                  }
+                },
+                "properties": [
+                  {
+                    "id": "custom.hideFrom",
+                    "value": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": true
+                    }
+                  }
+                ]
+              }
+            ]
           },
           "gridPos": {
             "h": 8,
             "w": 8,
             "x": 0,
-            "y": 21
+            "y": 20
           },
           "id": 31,
           "options": {
@@ -1478,13 +1505,13 @@
     ]
   },
   "time": {
-    "from": "2025-06-15T22:00:00.000Z",
-    "to": "2025-09-10T21:59:59.000Z"
+    "from": "2025-07-31T22:00:00.000Z",
+    "to": "2025-08-31T21:59:59.000Z"
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Develocity Savings - imported",
+  "title": "Develocity Savings - v1",
   "uid": "-0307T9Nk1",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }
